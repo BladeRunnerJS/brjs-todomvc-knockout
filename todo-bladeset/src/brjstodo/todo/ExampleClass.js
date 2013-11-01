@@ -1,0 +1,3 @@
+brjstodo.todo.ExampleClass = function()
+{
+};
