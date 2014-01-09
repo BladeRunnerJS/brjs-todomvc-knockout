@@ -1,13 +1,12 @@
-caplin.thirdparty('caplin-br');
-    
 ( function() {
   
-  var br = require( 'br' );
+  var br = require( 'br/Core' );
   var ServiceRegistry = require( 'br/ServiceRegistry' );
+  var PresentationModel = require( 'br/presenter/PresentationModel' );
+  var DisplayField = require( 'br/presenter/node/DisplayField' );
+  var NodeList = require( 'br/presenter/node/NodeList' );
 
   function ExamplePresentationModel() {
-    var DisplayField = br.presenter.node.DisplayField;
-    var NodeList = br.presenter.node.NodeList;
     this.items = new NodeList( [ new DisplayField( 'foo' ), new DisplayField( 'bar' ) ] );
 
     // get the event hub
@@ -15,12 +14,11 @@ caplin.thirdparty('caplin-br');
 
     // register to recieve events
     this.eventHub.channel( 'todo-list' ).on( 'todo-added', this._todoAdded, this );
-  };
+  }
 
-  br.extend( ExamplePresentationModel, br.presenter.PresentationModel );
+  br.Core.extend( ExamplePresentationModel, PresentationModel );
 
   ExamplePresentationModel.prototype._todoAdded = function( added ) {
-    var DisplayField = br.presenter.node.DisplayField;
 
     // create a new field for the new item
     var newItem = new DisplayField( added.text );
