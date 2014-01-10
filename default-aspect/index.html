@@ -32,7 +32,8 @@
 		<@new-js.bundle dev-minifier="combined"@/>
 		<script>
 			( function() {
-				var oApp = new brjstodo.App();
+				var App = require( 'brjstodo/App' );
+				var app = new App();
 			} )();
 		</script>
 	</body>
