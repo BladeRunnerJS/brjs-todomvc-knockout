@@ -14,7 +14,7 @@ function ExamplePresentationModel() {
   this.eventHub.channel( 'todo-list' ).on( 'todo-added', this._todoAdded, this );
 }
 
-br.Core.extend( ExamplePresentationModel, PresentationModel );
+br.extend( ExamplePresentationModel, PresentationModel );
 
 ExamplePresentationModel.prototype._todoAdded = function( added ) {
 
