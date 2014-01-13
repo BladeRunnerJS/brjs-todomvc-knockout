@@ -7,7 +7,7 @@ var Field = require( 'br/presenter/node/Field' );
 
 function ExamplePresentationModel() {
   this.todoText = new Field( '' );
-  this.eventHub = ServiceRegistry.getService( 'br.demo-event-hub' );
+  this.eventHub = ServiceRegistry.getService( 'br.event-hub' );
 }
 br.extend( ExamplePresentationModel, PresentationModel );
 

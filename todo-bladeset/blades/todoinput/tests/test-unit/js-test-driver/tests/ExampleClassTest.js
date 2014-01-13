@@ -25,10 +25,10 @@ ExampleClassTest.prototype.setUp = function() {
   };
 
   // ensure there isn't already an event-hub registered
-  ServiceRegistry.deregisterService( 'br.demo-event-hub' );
+  ServiceRegistry.deregisterService( 'br.event-hub' );
 
   // Register the fake event hub
-  ServiceRegistry.registerService( 'br.demo-event-hub', fakeEventHub );
+  ServiceRegistry.registerService( 'br.event-hub', fakeEventHub );
 };
 
 ExampleClassTest.prototype.testTodoTextFieldIsInitialized = function() {
