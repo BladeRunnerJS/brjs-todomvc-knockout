@@ -1,8 +1,13 @@
 <div id="brjstodo.todo.todoitems.view-template">
-  <ul class="todo-list" data-bind="foreach:items">
-    <li class="view">
-      <label data-bind="text:value"></label>
-      <!-- <button class="destroy"></button> -->
+  <ul id="todo-list" data-bind="foreach:items">
+    <li>
+      <div class="view">
+        <input class="toggle" type="checkbox">
+        <label data-bind="text:label"></label>
+        <button class="destroy"
+                data-bind="event: { click: $parent.destroyItem.bind( $parent ) }">
+        </button>
+      </div>
     </li>
   </ul>
 </div>

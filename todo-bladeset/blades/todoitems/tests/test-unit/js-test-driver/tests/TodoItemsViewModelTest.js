@@ -1,13 +1,13 @@
 var ServiceRegistry = require( 'br/ServiceRegistry' );
 
-var ExamplePresentationModel = require( 'brjstodo/todo/todoinput/ExamplePresentationModel' );
+var TodoItemsViewModel = require( 'brjstodo/todo/todoinput/TodoItemsViewModel' );
 
 var fakeEventHub;
 var fakeChannel;
     
-var ExampleClassTest = TestCase('ExampleClassTest');
+var TodoItemsViewModelTest = TestCase('TodoItemsViewModelTest');
 
-ExampleClassTest.prototype.setUp = function() {
+TodoItemsViewModelTest.prototype.setUp = function() {
 
   fakeChannel = {
     on: function(eventName, callback, context) {
@@ -33,16 +33,16 @@ ExampleClassTest.prototype.setUp = function() {
   ServiceRegistry.registerService( 'br.event-hub', fakeEventHub );
 };
 
-ExampleClassTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
-  var todoItemsBlade = new ExamplePresentationModel();
+TodoItemsViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
+  var todoItemsBlade = new TodoItemsViewModel();
 
   assertEquals( fakeEventHub.channelName , 'todo-list' );
   assertEquals( fakeChannel.eventName , 'todo-added' );
   assertEquals( fakeChannel.context , todoItemsBlade );
 };
 
-ExampleClassTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
-  var todoItemsBlade = new ExamplePresentationModel();
+TodoItemsViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
+  var todoItemsBlade = new TodoItemsViewModel();
 
   var itemText = 'hello';
 

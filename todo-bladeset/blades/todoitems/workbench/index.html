@@ -8,12 +8,12 @@
 		
 		<script type="text/javascript">
 			function initialize() {
-				var ExamplePresentationModel = require( 'brjstodo/todo/todoitems/ExamplePresentationModel' );
+				var TodoItemsViewModel = require( 'brjstodo/todo/todoitems/TodoItemsViewModel' );
 				var PresenterComponent = require( 'br/presenter/component/PresenterComponent' );
 				var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
 
 				var workbench = new br.workbench.ui.Workbench(250, 310);
-				var model = new ExamplePresentationModel();
+				var model = new TodoItemsViewModel();
 				var component = new PresenterComponent("brjstodo.todo.todoitems.view-template", model);
 				var presentationModelViewer = new PresentationModelViewer(model);
 				

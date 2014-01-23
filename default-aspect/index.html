@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<base href="@APP.VERSION@"/>
 		
-		<title>My Application</title>
+		<title>BladeRunnerJS MVC Todo</title>
 
 		<@css.bundle theme="standard"@/>
 
@@ -20,7 +20,82 @@
     </script>
 
 	</head>
-	<body>
+	<body class="learn-bar">
+
+		<aside class="learn">
+			<header>
+				<h3>Backbone.js</h3>
+				<span class="source-links">
+					
+					<h5>Architecture Example</h5>
+					<a href="https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/backbone">Source</a>
+					
+					<h5>Dependency Example</h5> 
+					<a class="demo-link" href="http://todomvc.com/dependency-examples/backbone_require">Demo</a>,  <a href="https://github.com/tastejs/todomvc/tree/gh-pages/dependency-examples/backbone_require">Source</a>  
+
+					<h5>Enyo &amp; Backbone.js</h5>  
+					<a class="demo-link" href="http://todomvc.com/labs/dependency-examples/enyo_backbone">Demo</a>,  <a href="https://github.com/tastejs/todomvc/tree/gh-pages/labs/dependency-examples/enyo_backbone">Source</a>  
+
+					<h5>TypeScript &amp; Backbone.js</h5>  <a class="demo-link" href="http://todomvc.com/labs/architecture-examples/typescript-backbone">Demo</a>,  <a href="https://github.com/tastejs/todomvc/tree/gh-pages/labs/architecture-examples/typescript-backbone">Source</a>   
+
+				</span>
+			</header>
+
+			<hr> 
+
+			<blockquote class="quote speech-bubble">
+				<p>Backbone.js gives structure to web applications by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing API over a RESTful JSON interface.</p>
+				<footer>
+					<a href="http://backbonejs.org">Backbone.js</a>
+				</footer>
+			</blockquote>
+
+			<hr>
+
+			<h4>Official Resources</h4>
+
+			<ul>
+				<li>
+					<a href="http://backbonejs.org/docs/backbone.html">Annotated source code</a>
+				</li>
+				<li>
+					<a href="http://backbonejs.org/#examples">Applications built with Backbone.js</a>
+				</li>  
+				<li>
+					<a href="http://backbonejs.org/#faq">FAQ</a>
+				</li>
+			</ul>
+
+			<h4>Articles and Guides</h4>
+
+			<ul>
+				<li>
+					<a href="http://addyosmani.github.io/backbone-fundamentals">Developing Backbone.js Applications</a>
+				</li>
+				<li>
+					<a href="https://github.com/documentcloud/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites">Collection of tutorials, blog posts, and example sites</a>
+				</li>
+			</ul>
+
+			<h4>Community</h4>
+
+			<ul>
+				<li>
+					<a href="http://stackoverflow.com/questions/tagged/backbone.js">Backbone.js on StackOverflow</a>
+				</li> 
+				<li>
+					<a href="https://groups.google.com/forum/#!forum/backbonejs">Google Groups mailing list</a>
+				</li>
+				<li>
+					<a href="http://twitter.com/documentcloud">Backbone.js on Twitter</a>
+				</li>
+			</ul> 
+
+			<footer>
+				<hr>
+				<em>If you have other helpful links to share, or find any of the links above no longer work, please <a href="https://github.com/tastejs/todomvc/issues">let us know</a>.</em>
+			</footer>
+		</aside>
 
 		<section id="todoapp">
 			<header id="header">
@@ -30,12 +105,32 @@
 			<footer id="footer"></footer>
 		</section>
 
+		<footer id="info">
+			<p>Double-click to edit a todo</p>
+			<p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+
 		<@new-js.bundle dev-minifier="combined"@/>
 		<script>
 			( function() {
+				hacks();
+
 				var App = require( 'brjstodo/App' );
 				var app = new App();
 			} )();
+
+			function hacks() {
+				// Hack until CSS bundlers are fixed
+				var styleEls = document.getElementsByTagName( 'link' );
+				var el;
+				for( var i = 0, l = styleEls.length; i < l; ++i ) {
+					el = styleEls[ i ];
+					if( el && /(\/)?css\/common_css.bundle$/.test( el.href ) ) {
+						el.parentNode.removeChild( el );
+					}
+				}
+			}
 		</script>
 	</body>
 </html>
