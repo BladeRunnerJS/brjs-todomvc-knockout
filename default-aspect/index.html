@@ -7,17 +7,10 @@
 
 		<@css.bundle theme="standard"@/>
 
-		<!-- TODO: remove this script block once we have a more reliable way of determining whether libraries have been required using a trie -->
-    <script type="text/javascript">
-	    function TestCase() {
-	    }
-	    jstestdriver = {
-	      pluginRegistrar:{
-	      	register:function(){}
-	      }
-	    };
-	    "br.event-hub";
-    </script>
+        <!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
+        <script>
+            "br.event-hub";
+        </script>
 
 	</head>
 	<body class="learn-bar">
