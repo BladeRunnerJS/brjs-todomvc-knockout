@@ -3,9 +3,10 @@ var ServiceRegistry = require( 'br/ServiceRegistry' );
 var PresentationModel = require( 'br/presenter/PresentationModel' );
 var DisplayField = require( 'br/presenter/node/DisplayField' );
 var NodeList = require( 'br/presenter/node/NodeList' );
+var TodoViewModel = require( './TodoViewModel' );
 
 function TodoViewItemsViewModel() {
-  this.items = new NodeList( [] );
+  this.todos = new NodeList( [] );
 
   // get the event hub
   this.eventHub = ServiceRegistry.getService( 'br.event-hub' );
@@ -18,21 +19,20 @@ br.extend( TodoViewItemsViewModel, PresentationModel );
 TodoViewItemsViewModel.prototype._todoAdded = function( added ) {
 
   // create a new field for the new item
-  var newItem = new DisplayField( added.id );
-  newItem.label.setValue( added.text );
+  var todoViewModel = new TodoViewModel( added );
 
   // get the existing items
-  var nodes = this.items.getPresentationNodesArray();
+  var nodes = this.todos.getPresentationNodesArray();
 
   // append the new item to the array
-  nodes.push( newItem );
+  nodes.push( todoViewModel );
 
   // update the View Model which triggers a UI update
-  this.items.updateList( nodes );
+  this.todos.updateList( nodes );
 };
 
-TodoViewItemsViewModel.prototype.destroyItem = function( data, event ) {
-  var nodes = this.items.getPresentationNodesArray();
+TodoViewItemsViewModel.prototype.remove = function( data, event ) {
+  var nodes = this.todos.getPresentationNodesArray();
   var updatedNodes = [];
   nodes.forEach( function( node ) {
     if( node !== data ) {
@@ -40,7 +40,7 @@ TodoViewItemsViewModel.prototype.destroyItem = function( data, event ) {
     }
   } );
 
-  this.items.updateList( updatedNodes );
+  this.todos.updateList( updatedNodes );
 };
 
 module.exports = TodoViewItemsViewModel;

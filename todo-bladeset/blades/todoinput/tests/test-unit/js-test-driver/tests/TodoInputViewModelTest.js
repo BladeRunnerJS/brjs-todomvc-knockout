@@ -44,12 +44,12 @@ TodoInputViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = fu
 TodoInputViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
   var todoItemsBlade = new TodoInputViewModel();
 
-  var itemText = 'hello';
+  var itemTitle = 'hello';
 
   // trigger the callback
-  fakeChannel.callback.call( fakeChannel.context, { text: itemText } );
+  fakeChannel.callback.call( fakeChannel.context, { title: itemTitle } );
 
   // check the item has been added to the end of the list
   var items = todoItemsBlade.items.getPresentationNodesArray();
-  assertEquals( itemText, items[ items.length - 1 ].value.getValue() );
+  assertEquals( itemTitle, items[ items.length - 1 ].value.getValue() );
 };

@@ -14,7 +14,7 @@ br.extend( TodoInputViewModel, PresentationModel );
 TodoInputViewModel.prototype.keyPressed = function( data, event ) {
   if( event.keyCode === ENTER_KEY_CODE ) {
     var todoTextValue = this.todoText.value.getValue();
-    this.eventHub.channel( 'todo-list' ).trigger( 'todo-added', { text: todoTextValue } );
+    this.eventHub.channel( 'todo-list' ).trigger( 'todo-added', { title: todoTextValue } );
     this.todoText.value.setValue( '' );
   }
 
