@@ -36,9 +36,9 @@ TodoInputViewModelTest.prototype.setUp = function() {
 TodoInputViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
   var todoItemsBlade = new TodoInputViewModel();
 
-  assertEquals( fakeEventHub.channelName , 'todo-list' );
-  assertEquals( fakeChannel.eventName , 'todo-added' );
-  assertEquals( fakeChannel.context , todoItemsBlade );
+  assertEquals( 'todo-list', fakeEventHub.channelName );
+  assertEquals( 'todo-added', fakeChannel.eventName );
+  assertEquals( todoItemsBlade, fakeChannel.context );
 };
 
 TodoInputViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {

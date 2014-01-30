@@ -7,6 +7,11 @@ var fakeChannel;
     
 var TodoItemsViewModelTest = TestCase('TodoItemsViewModelTest');
 
+var fakeEventHub;
+var fakeChannel;
+
+var ExampleClassTest = TestCase('ExampleClassTest');
+
 TodoItemsViewModelTest.prototype.setUp = function() {
 
   fakeChannel = {
@@ -36,18 +41,18 @@ TodoItemsViewModelTest.prototype.setUp = function() {
 TodoItemsViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
   var todoItemsBlade = new TodoItemsViewModel();
 
-  assertEquals( fakeEventHub.channelName , 'todo-list' );
-  assertEquals( fakeChannel.eventName , 'todo-added' );
-  assertEquals( fakeChannel.context , todoItemsBlade );
+  assertEquals( 'todo-list', fakeEventHub.channelName );
+  assertEquals( 'todo-added', fakeChannel.eventName );
+  assertEquals( todoItemsBlade, fakeChannel.context );
 };
 
 TodoItemsViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
   var todoItemsBlade = new TodoItemsViewModel();
 
-  var itemText = 'hello';
+  var itemTitle = 'hello';
 
   // trigger the callback
-  fakeChannel.callback.call( fakeChannel.context, { text: itemText } );
+  fakeChannel.callback.call( fakeChannel.context, { title: itemTitle } );
 
   // check the item has been added to the end of the list
   var items = todoItemsBlade.items.getPresentationNodesArray();
