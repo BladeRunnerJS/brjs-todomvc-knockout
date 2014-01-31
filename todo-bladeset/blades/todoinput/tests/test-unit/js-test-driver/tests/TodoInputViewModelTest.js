@@ -1,20 +1,18 @@
 var ServiceRegistry = require( 'br/ServiceRegistry' );
-
 var TodoInputViewModel = require( 'brjstodo/todo/todoinput/TodoInputViewModel' );
 
 var fakeEventHub;
 var fakeChannel;
-    
+
 var TodoInputViewModelTest = TestCase('TodoInputViewModelTest');
 
 TodoInputViewModelTest.prototype.setUp = function() {
 
   fakeChannel = {
-    on: function(eventName, callback, context) {
+    trigger: function( eventName, data ) {
       // store event name and data
       this.eventName = eventName;
-      this.callback = callback;
-      this.context = context;
+      this.data = data;
     }
   };
 
@@ -33,23 +31,23 @@ TodoInputViewModelTest.prototype.setUp = function() {
   ServiceRegistry.registerService( 'br.event-hub', fakeEventHub );
 };
 
-TodoInputViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
-  var todoItemsBlade = new TodoInputViewModel();
+TodoInputViewModelTest.prototype.testTodoTextFieldIsInitialized = function() {
+  var todoInputBlade = new TodoInputViewModel();
 
-  assertEquals( 'todo-list', fakeEventHub.channelName );
-  assertEquals( 'todo-added', fakeChannel.eventName );
-  assertEquals( todoItemsBlade, fakeChannel.context );
+  assertEquals( '', todoInputBlade.todoText.value.getValue() );
 };
 
-TodoInputViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
-  var todoItemsBlade = new TodoInputViewModel();
+TodoInputViewModelTest.prototype.testEnterKeyPressedTriggersEventOnEventHub = function() {
+  // Initialize
+  var testTodoTitle = 'write some code and test it';
+  var todoInputBlade = new TodoInputViewModel();
+  todoInputBlade.todoText.value.setValue( testTodoTitle );
 
-  var itemTitle = 'hello';
+  // Execute test
+  todoInputBlade.keyPressed( null, { keyCode: 13 } );
 
-  // trigger the callback
-  fakeChannel.callback.call( fakeChannel.context, { title: itemTitle } );
-
-  // check the item has been added to the end of the list
-  var items = todoItemsBlade.items.getPresentationNodesArray();
-  assertEquals( itemTitle, items[ items.length - 1 ].value.getValue() );
+  // Verify
+  assertEquals( 'todo-list', fakeEventHub.channelName );
+  assertEquals( 'todo-added', fakeChannel.eventName );
+  assertEquals( testTodoTitle, fakeChannel.data.title );
 };
