@@ -7,10 +7,10 @@
 
 		<@css.bundle theme="standard"@/>
 
-        <!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
-        <script>
-            "br.event-hub";
-        </script>
+    <!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
+    <script>
+      "br.event-hub";
+    </script>
 
 	</head>
 	<body class="learn-bar">
@@ -49,10 +49,7 @@
 
 			<ul>
 				<li>
-					<a href="http://addyosmani.github.io/backbone-fundamentals">Developing Backbone.js Applications</a>
-				</li>
-				<li>
-					<a href="https://github.com/documentcloud/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites">Collection of tutorials, blog posts, and example sites</a>
+					<strong>TODO</strong>
 				</li>
 			</ul>
 
@@ -83,17 +80,23 @@
 
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
-			<p>Created by <a href="https://github.com/leggetter">Phil Leggetter</a></p>
+			<p>Created by <a href="https://github.com/orgs/BladeRunnerJS/members">The BladeRunnerJS team</a></p>
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
 
-		<@new-js.bundle dev-minifier="combined"@/>
+		<@js.bundle@/>
 		<script>
 			( function() {
-				hacks();
+
+				var ServiceRegistry = require( 'br/ServiceRegistry' );
+				var EventHub = require( 'br/EventHub' );
+				ServiceRegistry.registerService( 'br.event-hub', new EventHub() );
 
 				var App = require( 'brjstodo/App' );
 				var app = new App();
+
+				hacks();
+
 			} )();
 
 			function hacks() {
@@ -102,7 +105,7 @@
 				var el;
 				for( var i = 0, l = styleEls.length; i < l; ++i ) {
 					el = styleEls[ i ];
-					if( el && /(\/)?css\/common_css.bundle$/.test( el.href ) ) {
+					if( el && /(\/)?css\/common\/bundle\.css$/.test( el.href ) ) {
 						el.parentNode.removeChild( el );
 					}
 				}

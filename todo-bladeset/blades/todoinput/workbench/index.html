@@ -2,9 +2,14 @@
 <html>
 	<head>
 		<title>Workbench</title>
+
+		<!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
+    <script>
+      "br.event-hub";
+    </script>
 		
 		<@css.bundle theme="standard"@/>
-		<@new-js.bundle dev-minifier="combined"@/>
+		<@js.bundle @/>
 		
 		<script type="text/javascript">
 			function initialize() {
