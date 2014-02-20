@@ -24,6 +24,16 @@
 				
 				workbench.addToRightWing(presentationModelViewer, "Visualise Presentation Model", false);
 				workbench.displayComponent(component, 200, 100);
+
+				var ServiceRegistry = require( 'br/ServiceRegistry' );
+				var eventHub = ServiceRegistry.getService( 'br.event-hub' );
+				var fakeTodos = [
+					{ title: 'Fake todo 1' },
+					{ title: 'Fake todo 2' }
+				];
+				fakeTodos.forEach( function( todo ) {
+					eventHub.channel( 'todo-list' ).trigger( 'todo-added', todo );
+				} );
 			}
 		</script>
 	</head>

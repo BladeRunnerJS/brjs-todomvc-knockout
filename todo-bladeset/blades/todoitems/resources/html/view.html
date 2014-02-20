@@ -1,14 +1,20 @@
 <div id="brjstodo.todo.todoitems.view-template">
+  
+  <section id="main" data-bind="visible: listVisible">
 
-  <ul id="todo-list" data-bind="foreach: todos">
-    <li data-bind="css: { completed: completed, editing: editing }">
-      <div class="view">
-        <input class="toggle" data-bind="checked: completed" type="checkbox">
-        <label data-bind="text: title, event: { dblclick: $parent.editItem }"></label>
-        <button class="destroy" data-bind="click: $parent.remove.bind( $parent )"></button>
-      </div>
-      <input class="edit" data-bind="value: title, valueUpdate: 'afterkeydown', enterKey: $parent.saveEditing, escapeKey: $parent.cancelEditing, selectAndFocus: editing, event: { blur: $parent.stopEditing }">
-    </li>
-  </ul>
+    <input id="toggle-all" data-bind="checked: allCompleted" type="checkbox">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul id="todo-list" data-bind="foreach: todos">
+      <li data-bind="css: { completed: completed, editing: editing }">
+        <div class="view">
+          <input class="toggle" data-bind="checked: completed" type="checkbox">
+          <label data-bind="text: title, event: { dblclick: $parent.editItem }"></label>
+          <button class="destroy" data-bind="click: $parent.remove.bind( $parent )"></button>
+        </div>
+        <input class="edit" data-bind="value: title, valueUpdate: 'afterkeydown', enterKey: $parent.saveEditing, escapeKey: $parent.cancelEditing, selectAndFocus: editing, event: { blur: $parent.stopEditing }">
+      </li>
+    </ul>
+    
+  </section>
 
 </div>

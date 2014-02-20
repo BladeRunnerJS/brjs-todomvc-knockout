@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Workbench</title>
+		
+		<@css.bundle theme="standard"@/>
+		<@js.bundle dev-minifier="none"@/>
+		
+		<script type="text/javascript">
+			var Workbench = require( 'br/workbench/ui/Workbench' );
+			var TodoFilterViewModel = require( 'brjstodo/todo/todofilter/TodoFilterViewModel' );
+			var PresenterComponent = require( 'br/presenter/component/PresenterComponent' );
+			var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
+
+			function initialize() {
+				var workbench = new Workbench(250, 310);
+				var model = new TodoFilterViewModel();
+				var component = new PresenterComponent("brjstodo.todo.todofilter.view-template", model);
+				var presentationModelViewer = new PresentationModelViewer(model);
+				
+				workbench.addToRightWing(presentationModelViewer, "Visualise Presentation Model", false);
+				workbench.displayComponent(component, 200, 100);
+			}
+		</script>
+	</head>
+	<body onload="initialize()">
+	</body>
+</html>
