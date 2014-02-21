@@ -1,25 +1,44 @@
 "use strict";
 
-var br = require( 'br/Core' );
 var ServiceRegistry = require( 'br/ServiceRegistry' );
-var PresentationModel = require( 'br/presenter/PresentationModel' );
-var DisplayField = require( 'br/presenter/node/DisplayField' );
-var WritableProperty = require( 'br/presenter/property/WritableProperty' );
-var EditableProperty = require( 'br/presenter/property/EditableProperty' );
-var NodeList = require( 'br/presenter/node/NodeList' );
 var TodoViewModel = require( './TodoViewModel' );
+var ko = require( 'ko' );
 
 /**
  * The View Model representing the UI for a list of todo items.
  */
 function TodoViewItemsViewModel() {
-  this.todos = new NodeList( [] );
+  this.todos = ko.observableArray();
 
-  this.listVisible = new WritableProperty();
-  this._updateListVisibility();
+  this.listVisible = new ko.computed(function() {
+        return this.todos().length;
+    }, this);
 
-  this.allCompleted = new EditableProperty();
-  this.allCompleted.addChangeListener( this, '_allCompletedChangeListener' );
+  // count of all completed todos
+  this.completedCount = ko.computed(function () {
+      return this.todos().filter(function (todo) {
+        return todo.completed();
+      }).length;
+    }.bind(this));
+
+    // count of todos that are not complete
+  this.remainingCount = ko.computed(function () {
+      return this.todos().length - this.completedCount();
+    }.bind(this));
+
+  this.allCompleted = ko.computed({
+      //always return true/false based on the done flag of all todos
+      read: function () {
+        return !this.remainingCount();
+      }.bind(this),
+      // set all todos to the written value (true/false)
+      write: function (newValue) {
+        this.todos().forEach(function (todo) {
+          // set even if value is the same, as subscribers are not notified in that case
+          todo.completed(newValue);
+        });
+      }.bind(this)
+    });
 
   // get the event hub
   this.eventHub = ServiceRegistry.getService( 'br.event-hub' );
@@ -27,55 +46,15 @@ function TodoViewItemsViewModel() {
   // register to recieve events
   this.eventHub.channel( 'todo-list' ).on( 'todo-added', this._todoAdded, this );
 }
-br.extend( TodoViewItemsViewModel, PresentationModel );
 
 /** @private */
 TodoViewItemsViewModel.prototype._todoAdded = function( added ) {
-
-  // create a new field for the new item
   var todoViewModel = new TodoViewModel( added );
-
-  // get the existing items
-  var nodes = this.todos.getPresentationNodesArray();
-
-  // append the new item to the array
-  nodes.push( todoViewModel );
-
-  // update the View Model which triggers a UI update
-  this.todos.updateList( nodes );
-
-  this._updateListVisibility();
-};
-
-/** @private */
-TodoViewItemsViewModel.prototype._updateListVisibility = function() {
-  var visible = ( this.todos.getPresentationNodesArray().length > 0 );
-  this.listVisible.setValue( visible );
-};
-
-TodoViewItemsViewModel.prototype._allCompletedChangeListener = function() {
-  var allCompleted = this.allCompleted.getValue();
-
-  var nodes = this.todos.getPresentationNodesArray();
-  nodes.forEach( function( node ) {
-    node.completed.setValue( allCompleted );
-  } );
-
-  this.todos.updateList( nodes );
+  this.todos.push( todoViewModel );
 };
 
 TodoViewItemsViewModel.prototype.remove = function( data, event ) {
-  var nodes = this.todos.getPresentationNodesArray();
-  var updatedNodes = [];
-  nodes.forEach( function( node ) {
-    if( node !== data ) {
-      updatedNodes.push( node );
-    }
-  } );
-
-  this.todos.updateList( updatedNodes );
-
-  this._updateListVisibility();
+  this.todos.remove( data );
 };
 
 module.exports = TodoViewItemsViewModel;

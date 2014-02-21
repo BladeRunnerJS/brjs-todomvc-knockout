@@ -10,19 +10,30 @@
 		
 		<@css.bundle theme="standard"@/>
 		<@js.bundle@/>
+		<style>
+		#main {
+			margin-top: 50px;
+		}
+		</style>
 		
 		<script type="text/javascript">
 			function initialize() {
+
 				var TodoItemsViewModel = require( 'brjstodo/todo/todoitems/TodoItemsViewModel' );
-				var PresenterComponent = require( 'br/presenter/component/PresenterComponent' );
+				var KnockoutComponent = require( 'br/knockout/KnockoutComponent' );
 				var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
 
-				var workbench = new br.workbench.ui.Workbench(250, 310);
 				var model = new TodoItemsViewModel();
-				var component = new PresenterComponent("brjstodo.todo.todoitems.view-template", model);
-				var presentationModelViewer = new PresentationModelViewer(model);
-				
+				var component = new KnockoutComponent("brjstodo.todo.todoitems.view-template", model);
+
+				// Workbench
+				var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
+				var KnockoutModelTree = require( 'br/knockout/workbench/KnockoutModelTree' );
+				var workbench = new br.workbench.ui.Workbench(250, 310);
+				var presentationModelViewer = new PresentationModelViewer(model, KnockoutModelTree);
 				workbench.addToRightWing(presentationModelViewer, "Visualise Presentation Model", false);
+
+				// Display
 				workbench.displayComponent(component, 200, 100);
 
 				var ServiceRegistry = require( 'br/ServiceRegistry' );

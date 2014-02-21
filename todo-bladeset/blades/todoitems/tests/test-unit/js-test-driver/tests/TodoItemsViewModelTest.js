@@ -1,6 +1,6 @@
 var ServiceRegistry = require( 'br/ServiceRegistry' );
 
-var TodoItemsViewModel = require( 'brjstodo/todo/todoinput/TodoItemsViewModel' );
+var TodoItemsViewModel = require( 'brjstodo/todo/todoitems/TodoItemsViewModel' );
 
 var fakeEventHub;
 var fakeChannel;
@@ -55,6 +55,6 @@ TodoItemsViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = fu
   fakeChannel.callback.call( fakeChannel.context, { title: itemTitle } );
 
   // check the item has been added to the end of the list
-  var items = todoItemsBlade.items.getPresentationNodesArray();
-  assertEquals( itemText, items[ items.length - 1 ].value.getValue() );
+  var items = todoItemsBlade.todos();
+  assertEquals( itemTitle, items[ items.length - 1 ].title() );
 };
