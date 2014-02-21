@@ -34,14 +34,14 @@ TodoInputViewModelTest.prototype.setUp = function() {
 TodoInputViewModelTest.prototype.testTodoTextFieldIsInitialized = function() {
   var todoInputBlade = new TodoInputViewModel();
 
-  assertEquals( '', todoInputBlade.todoText.value.getValue() );
+  assertEquals( '', todoInputBlade.todoText() );
 };
 
 TodoInputViewModelTest.prototype.testEnterKeyPressedTriggersEventOnEventHub = function() {
   // Initialize
   var testTodoTitle = 'write some code and test it';
   var todoInputBlade = new TodoInputViewModel();
-  todoInputBlade.todoText.value.setValue( testTodoTitle );
+  todoInputBlade.todoText( testTodoTitle );
 
   // Execute test
   todoInputBlade.keyPressed( null, { keyCode: 13 } );

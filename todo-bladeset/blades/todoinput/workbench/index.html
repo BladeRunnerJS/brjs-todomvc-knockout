@@ -13,16 +13,21 @@
 		
 		<script type="text/javascript">
 			function initialize() {
-				var TodoInputViewModel = require( 'brjstodo/todo/todoinput/TodoInputViewModel' );
-				var PresenterComponent = require( 'br/presenter/component/PresenterComponent' );
-				var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
 
-				var workbench = new br.workbench.ui.Workbench(250, 310);
+				var TodoInputViewModel = require( 'brjstodo/todo/todoinput/TodoInputViewModel' );
+				var KnockoutComponent = require( 'br/knockout/KnockoutComponent' );
+
 				var model = new TodoInputViewModel();
-				var component = new PresenterComponent("brjstodo.todo.todoinput.view-template", model);
-				var presentationModelViewer = new PresentationModelViewer(model);
-				
+				var component = new KnockoutComponent("brjstodo.todo.todoinput.view-template", model);
+
+				// Workbench
+				var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
+				var KnockoutModelTree = require( 'br/knockout/workbench/KnockoutModelTree' );
+				var workbench = new br.workbench.ui.Workbench(250, 310);
+				var presentationModelViewer = new PresentationModelViewer(model, KnockoutModelTree);
 				workbench.addToRightWing(presentationModelViewer, "Visualise Presentation Model", false);
+
+				// Display
 				workbench.displayComponent(component, 200, 100);
 			}
 		</script>
