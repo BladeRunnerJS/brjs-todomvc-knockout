@@ -1,6 +1,7 @@
 var KnockoutComponent = require( 'br/knockout/KnockoutComponent' );
 var TodoInputViewModel = require( 'brjstodo/todo/todoinput/TodoInputViewModel' );
 var TodoItemsViewModel = require( 'brjstodo/todo/todoitems/TodoItemsViewModel' );
+var TodoFilterViewModel = require( 'brjstodo/todo/todofilter/TodoFilterViewModel' );
 
 var App = function() {
 
@@ -26,7 +27,11 @@ var App = function() {
   var itemsEl = itemsComponent.getElement().children[ 0 ];
   todoAppEl.appendChild( itemsEl );
 
-  // TODO: footer
+  // todo filter/footer
+  var filterModel = new TodoFilterViewModel();
+  var filterComponent = new KnockoutComponent( 'brjstodo.todo.todofilter.view-template', filterModel );
+  var filterEl = filterComponent.getElement().children[ 0 ];
+  todoAppEl.appendChild( filterEl );
 };
 
 module.exports = App;
