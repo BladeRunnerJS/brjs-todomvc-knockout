@@ -1,16 +1,42 @@
-var br = require( 'br/Core' );
+"use strict";
+
 var ServiceRegistry = require( 'br/ServiceRegistry' );
-var PresentationModel = require( 'br/presenter/PresentationModel' );
-var WritableProperty = require( 'br/presenter/property/WritableProperty' );
+var ko = require( 'ko' );
 
+/**
+ *
+ */
 function TodoFilterViewModel() {
-  this.todoCount = new WritableProperty( 0 );
+  this.todoCount = ko.observable( 0 );
+  this.completedCount = ko.observable( 0 );
 
-  this.eventHub = ServiceRegistry.getService( 'br.event-hub' );
+  this.visible = new ko.computed(function() {
+      return ( this.todoCount() > 0 ||
+               this.completedCount() > 0 );
+    }, this);
+
+  this._eventHub = ServiceRegistry.getService( 'br.event-hub' );
+  this._channel = this._eventHub.channel( 'todo-list' );
+
+  this._channel.on( 'remaining-updated', this._remainingUpdated, this );
+  this._channel.on( 'completed-updated', this._completedUpdated, this );
 }
-br.extend( TodoFilterViewModel, PresentationModel );
 
+/** @private */
+TodoFilterViewModel.prototype._remainingUpdated = function( remaining ) {
+  this.todoCount( remaining );
+};
+
+/** @private */
+TodoFilterViewModel.prototype._completedUpdated = function( completed ) {
+  this.completedCount( completed );
+};
+
+/**
+ * Called from the View to indicate completed items should be cleared.
+ */
 TodoFilterViewModel.prototype.clearCompleted = function() {
+  this._channel.trigger( 'clear-completed', null, this );
   return true;
 };
 
