@@ -11,7 +11,7 @@
           <label data-bind="text: title, event: { dblclick: $parent.editItem }"></label>
           <button class="destroy" data-bind="click: $parent.remove.bind( $parent )"></button>
         </div>
-        <input class="edit" data-bind="value: title, valueUpdate: 'afterkeydown', enterKey: $parent.saveEditing, escapeKey: $parent.cancelEditing, selectAndFocus: editing, event: { blur: $parent.stopEditing }">
+        <input class="edit" data-bind="value: title, valueUpdate: 'afterkeydown', selectAndFocus: editing, event: { blur: $parent.stopEditing, keypress: $parent.keyPressed.bind( $parent ), keydown: $parent.cancelEditing }">
       </li>
     </ul>
     

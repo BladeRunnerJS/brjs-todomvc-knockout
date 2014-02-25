@@ -4,6 +4,9 @@ var ServiceRegistry = require( 'br/ServiceRegistry' );
 var TodoViewModel = require( './TodoViewModel' );
 var ko = require( 'ko' );
 
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+
 /**
  * The View Model representing the UI for a list of todo items.
  */
@@ -72,8 +75,68 @@ TodoViewItemsViewModel.prototype._clearCompleted = function() {
 /**
  * Called from the view to remove a todo item.
  */
-TodoViewItemsViewModel.prototype.remove = function( data, event ) {
-  this.todos.remove( data );
+TodoViewItemsViewModel.prototype.remove = function( item, event ) {
+  this.todos.remove( item );
+};
+
+/**
+ * Called from view
+ */
+TodoViewItemsViewModel.prototype.editItem = function( item ) {
+  item.editing( true );
+  item.previousTitle = item.title();
+};
+
+/**
+ * Called from view.
+ * Note: keypress isn't triggered for ESC key.
+ */
+TodoViewItemsViewModel.prototype.keyPressed = function( item, event ) {
+  if( event.keyCode === ENTER_KEY_CODE ) {
+    this.saveEdit( item );
+  }
+
+  return true;
+};
+
+/**
+ * Called from view.
+ */
+TodoViewItemsViewModel.prototype.saveEdit = function( item ) {
+  item.editing(false);
+
+  var title = item.title();
+  var trimmedTitle = title.trim();
+
+  // Observable value changes are not triggered if they're consisting of whitespaces only
+  // Therefore we've to compare untrimmed version with a trimmed one to chech whether anything changed
+  // And if yes, we've to set the new value manually
+  if ( title !== trimmedTitle ) {
+    item.title(trimmedTitle);
+  }
+
+  if ( !trimmedTitle ) {
+    this.remove( item );
+  }
+};
+
+/**
+ * Called from view on keydown.
+ */
+TodoViewItemsViewModel.prototype.cancelEditing = function( item, event ) {
+  if( event.keyCode === ESCAPE_KEY_CODE ) {
+    item.editing( false );
+    item.title( item.previousTitle );
+  }
+
+  return true;
+};
+
+/**
+ * Called from view.
+ */
+TodoViewItemsViewModel.prototype.stopEditing = function( item ) {
+  item.editing( false );
 };
 
 module.exports = TodoViewItemsViewModel;

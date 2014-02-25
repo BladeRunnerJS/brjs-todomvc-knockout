@@ -1,3 +1,5 @@
+"use strict";
+
 var ENTER_KEY_CODE = 13;
 
 var ServiceRegistry = require( 'br/ServiceRegistry' );
