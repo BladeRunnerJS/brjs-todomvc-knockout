@@ -1,10 +1,8 @@
 <div id="brjstodo.todo.todofilter.view-template">
 	
   <footer id="footer" data-bind="visible: visible">
-    <!-- This should be `0 items left` by default -->
-    <span id="todo-count"><strong data-bind="text: todoCount"></strong> item left</span>
+    <span id="todo-count"><strong data-bind="text: todoCount"></strong> <span data-bind="text: itemsLabel"></span> left</span>
 
-    <!-- Hidden if no completed items are left ↓ -->
     <button id="clear-completed" data-bind="click: clearCompleted">
       Clear completed (<span data-bind="text: completedCount"></span>)
     </button>

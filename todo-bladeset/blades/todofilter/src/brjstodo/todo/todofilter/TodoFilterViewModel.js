@@ -8,6 +8,9 @@ var ko = require( 'ko' );
  */
 function TodoFilterViewModel() {
   this.todoCount = ko.observable( 0 );
+  this.itemsLabel = ko.computed( function() {
+    return ( this.todoCount() > 1? 'items' : 'item' );
+  }, this );
   this.completedCount = ko.observable( 0 );
 
   this.visible = new ko.computed(function() {

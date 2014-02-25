@@ -12,7 +12,7 @@ function TodoInputViewModel() {
 
 TodoInputViewModel.prototype.keyPressed = function( data, event ) {
   if( event.keyCode === ENTER_KEY_CODE ) {
-    var todoTextValue = this.todoText();
+    var todoTextValue = this.todoText().trim();
     this.eventHub.channel( 'todo-list' ).trigger( 'todo-added', { title: todoTextValue } );
     this.todoText( '' );
   }
