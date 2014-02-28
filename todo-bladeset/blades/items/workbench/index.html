@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Workbench</title>
+
+		<!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
+    <script>
+      "br.event-hub";
+    </script>
+		
+		<@css.bundle theme="standard"@/>
+		<@js.bundle@/>
+		<style>
+		#main {
+			margin-top: 50px;
+		}
+		</style>
+		
+		<script type="text/javascript">
+			var EventHubViewer = require( 'br/workbench/tools/EventHubViewer' );
+			var ServiceRegistry = require( 'br/ServiceRegistry' );
+			var Workbench = require( 'br/workbench/ui/Workbench' );
+			var KnockoutModelTree = require( 'br/knockout/workbench/KnockoutModelTree' );
+			var PresentationModelViewer = require( 'br/presenter/workbench/ui/PresentationModelViewer' );
+			var KnockoutComponent = require( 'br/knockout/KnockoutComponent' );
+
+			var ServiceRegistry = require( 'br/ServiceRegistry' );
+			var eventHub = ServiceRegistry.getService( 'br.event-hub' );
+
+			// ViewModel that is being created in the workbench
+			var ItemsViewModel = require( 'brjstodo/todo/items/ItemsViewModel' );
+
+			function addEventHubLogger( eventHub, workbench ) {
+				var eventHubViewer = new EventHubViewer( eventHub );
+				workbench.addToLeftWing( eventHubViewer, "EventHub Logging", false );
+			}
+
+			function addModelViewer( model, workbench ) {
+				var presentationModelViewer = new PresentationModelViewer(model, KnockoutModelTree);
+				workbench.addToRightWing( presentationModelViewer, "Visualise Presentation Model", false);
+			}
+
+			function addComponent( component, workbench  ) {
+				workbench.displayComponent( component, 200, 100 );
+			}
+
+			function initialize() {
+				var workbench = new Workbench(250, 310);
+				addEventHubLogger( eventHub, workbench );
+
+				var model = new ItemsViewModel();
+				var component = new KnockoutComponent( 'brjstodo.todo.items.view-template', model );
+
+				addComponent( component, workbench )
+				addModelViewer( model, workbench );
+
+				var fakeTodos = [
+					{ title: 'Fake todo 1' },
+					{ title: 'Fake todo 2' }
+				];
+				fakeTodos.forEach( function( todo ) {
+					eventHub.channel( 'todo-list' ).trigger( 'todo-added', todo );
+				} );
+			}
+		</script>
+	</head>
+	<body onload="initialize()">
+	</body>
+</html>

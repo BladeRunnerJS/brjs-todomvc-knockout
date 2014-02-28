@@ -1,0 +1,10 @@
+<div id="brjstodo.todo.input.view-template">
+  <header id="header">
+    <h1>todos</h1>
+    <input id="new-todo" type="text" class="todo-input"
+           data-bind="value:todoText,
+                      valueUpdate:'afterkeydown',
+                      event: { keypress: keyPressed }"
+           placeholder="What needs to be done?" />
+  </header>
+</div>
