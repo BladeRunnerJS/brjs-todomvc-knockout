@@ -1,10 +1,10 @@
 <div id="brjstodo.todo.items.view-template">
 
-  <section id="main" data-bind="visible: listVisible">
+  <section class="items-component" data-bind="visible: listVisible">
 
-    <input id="toggle-all" data-bind="checked: allCompleted" type="checkbox">
+    <input name="toggle-all" data-bind="checked: allCompleted" type="checkbox">
     <label for="toggle-all">Mark all as complete</label>
-    <ul id="todo-list" data-bind="foreach: todos">
+    <ul class="todo-list" data-bind="foreach: todos">
       <li data-bind="css: { completed: completed, editing: editing }">
         <div class="view">
           <input class="toggle" data-bind="checked: completed" type="checkbox">
