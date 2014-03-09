@@ -7,10 +7,10 @@
     <script>
       "br.event-hub";
     </script>
-		
+
 		<@css.bundle theme="standard"@/>
 		<@js.bundle @/>
-		
+
 		<script type="text/javascript">
 			var EventHubViewer = require( 'br/workbench/tools/EventHubViewer' );
 			var Workbench = require( 'br/workbench/ui/Workbench' );
@@ -20,6 +20,11 @@
 
 			var ServiceRegistry = require( 'br/ServiceRegistry' );
 			var eventHub = ServiceRegistry.getService( 'br.event-hub' );
+
+			// Set up TodosService
+			var LocalStorageService = require( 'todomvc/LocalStorageService' );
+			var todosService = new LocalStorageService();
+			ServiceRegistry.registerService( 'todomvc.storage', todosService );
 
 			// ViewModel that is being created in the workbench
 			var InputViewModel = require( 'brjstodo/todo/input/InputViewModel' );
