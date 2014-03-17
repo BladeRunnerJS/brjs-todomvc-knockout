@@ -3,6 +3,11 @@ var InputViewModel = require( 'brjstodo/todo/input/InputViewModel' );
 var ItemsViewModel = require( 'brjstodo/todo/items/ItemsViewModel' );
 var FilterViewModel = require( 'brjstodo/todo/filter/FilterViewModel' );
 
+var ServiceRegistry = require( 'br/ServiceRegistry' );
+var LocalStorageService = require( 'todomvc/LocalStorageService' );
+var todoService = new LocalStorageService();
+ServiceRegistry.registerService( 'todomvc.storage', todoService );
+
 var App = function() {
 
   var todoAppEl = document.getElementById( 'todoapp' );

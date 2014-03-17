@@ -3,11 +3,6 @@
 	<head>
 		<title>Workbench</title>
 
-		<!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
-    <script>
-      "br.event-hub";
-    </script>
-
 		<@css.bundle theme="standard"@/>
 		<@js.bundle @/>
 
@@ -23,8 +18,8 @@
 
 			// Set up TodosService
 			var LocalStorageService = require( 'todomvc/LocalStorageService' );
-			var todosService = new LocalStorageService();
-			ServiceRegistry.registerService( 'todomvc.storage', todosService );
+			var todoService = new LocalStorageService();
+			ServiceRegistry.registerService( 'todomvc.storage', todoService );
 
 			// ViewModel that is being created in the workbench
 			var InputViewModel = require( 'brjstodo/todo/input/InputViewModel' );
@@ -36,7 +31,7 @@
 
 			function addModelViewer( model, workbench ) {
 				var presentationModelViewer = new PresentationModelViewer(model, KnockoutModelTree);
-				workbench.addToRightWing( presentationModelViewer, "Visualise Presentation Model", false);
+				workbench.addToRightWing( presentationModelViewer, "Visualise Knockout View Model", false);
 			}
 
 			function addComponent( component, workbench  ) {

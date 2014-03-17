@@ -7,28 +7,28 @@ var ko = require( 'ko' );
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
-
-// The following should use some form of service.
-// For now store and initialise here.
-var LOCAL_STORAGE_ID = 'todos-brjs-knockoutjs';
-
 /**
  * The View Model representing the UI for a list of todo items.
  */
 function ItemsViewModel() {
+  this._todoService = ServiceRegistry.getService( 'todomvc.storage' );
+  this._todoService.on( 'todo-added', this._todoAdded, this );
+
   // get the event hub
   this._eventHub = ServiceRegistry.getService( 'br.event-hub' );
 
   // register to recieve events
   this._channel = this._eventHub.channel( 'todo-list' );
-  this._channel.on( 'todo-added', this._todoAdded, this );
   this._channel.on( 'clear-completed', this._clearCompleted, this );
 
-  // TODO: remove direct dependency on localStorage
-  var todos = ko.utils.parseJson( localStorage.getItem( LOCAL_STORAGE_ID ) ) || [];
-  this.todos = ko.observableArray(todos.map(function (todo) {
-      return new TodoViewModel( { title: todo.title, completed: todo.completed } );
-    } ) );
+  // TODO: Array map function?
+  var todos = this._todoService.getTodos();
+  var todoVMs = [];
+  todos.forEach( function( todo ) {
+    todoVMs.push( new TodoViewModel( todo ) );
+  } );
+
+  this.todos = ko.observableArray( todoVMs );
 
   this.listVisible = new ko.computed(function() {
       return this.todos().length;
@@ -67,15 +67,6 @@ function ItemsViewModel() {
       }
     }, this);
 
-
-  // TODO: remove direct dependency on localStorage
-  // internal computed observable that fires whenever anything changes in our todos
-  ko.computed(function () {
-    // store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
-    localStorage.setItem( LOCAL_STORAGE_ID, ko.toJSON( this.todos ) );
-  }.bind(this)).extend( {
-    throttle: 500
-  } ); // save at most twice per second
 }
 
 /** @private */
@@ -95,7 +86,10 @@ ItemsViewModel.prototype._clearCompleted = function() {
  * Called from the view to remove a todo item.
  */
 ItemsViewModel.prototype.remove = function( item, event ) {
+  // remove view model
   this.todos.remove( item );
+  // remove domain model
+  this._todoService.removeTodo( item.getTodo() );
 };
 
 /**
