@@ -13,13 +13,7 @@ var ESCAPE_KEY_CODE = 27;
 function ItemsViewModel() {
   this._todoService = ServiceRegistry.getService( 'todomvc.storage' );
   this._todoService.on( 'todo-added', this._todoAdded, this );
-
-  // get the event hub
-  this._eventHub = ServiceRegistry.getService( 'br.event-hub' );
-
-  // register to recieve events
-  this._channel = this._eventHub.channel( 'todo-list' );
-  this._channel.on( 'clear-completed', this._clearCompleted, this );
+  this._todoService.on( 'todo-removed', this._todoRemoved, this );
 
   // TODO: Array map function?
   var todos = this._todoService.getTodos();
@@ -40,16 +34,12 @@ function ItemsViewModel() {
         return todo.completed();
       }).length;
 
-      this._channel.trigger( 'completed-updated', count );
-
       return count;
     }, this );
 
   // count of todos that are not complete
   this.remainingCount = ko.computed(function () {
       var remaining = ( this.todos().length - this.completedCount() );
-      this._channel.trigger( 'remaining-updated', remaining );
-
       return remaining;
     }, this );
 
@@ -73,6 +63,15 @@ function ItemsViewModel() {
 ItemsViewModel.prototype._todoAdded = function( added ) {
   var todoViewModel = new TodoViewModel( added );
   this.todos.push( todoViewModel );
+};
+
+/** @private */
+ItemsViewModel.prototype._todoRemoved = function( removed ) {
+  this.todos().forEach( function( todoVM ) {
+    if( todoVM.getTodo() === removed ) {
+      this.todos.remove( todoVM );
+    }
+  }, this );
 };
 
 /** @private */

@@ -16,16 +16,14 @@ function TodoViewModel( todo ) {
 
   this.title.subscribe( function( updatedVal ) {
     this._todo.title = updatedVal;
+    this._todoService.updateTodo( this._todo );
   }, this );
 
-  this.title.subscribe( function( updatedVal ) {
+  this.completed.subscribe( function( updatedVal ) {
     this._todo.completed = updatedVal;
+    this._todoService.updateTodo( this._todo );
   }, this );
 }
-
-TodoViewModel.prototype._update = function() {
-  this._todoService.updateTodo( this._todo );
-};
 
 TodoViewModel.prototype.getTodo = function() {
   return this._todo;

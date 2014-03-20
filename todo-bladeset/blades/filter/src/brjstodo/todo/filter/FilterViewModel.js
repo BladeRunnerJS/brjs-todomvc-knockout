@@ -7,7 +7,14 @@ var ko = require( 'ko' );
  *
  */
 function FilterViewModel() {
-  this.todoCount = ko.observable( 0 );
+  this._todoService = ServiceRegistry.getService( 'todomvc.storage' );
+  this._todoService.on( 'todo-added', this._sync, this );
+  this._todoService.on( 'todo-updated', this._sync, this );
+  this._todoService.on( 'todo-removed', this._sync, this );
+
+  var todos = this._todoService.getTodos();
+
+  this.todoCount = ko.observable( todos.length );
   this.itemsLabel = ko.computed( function() {
     return ( this.todoCount() > 1? 'items' : 'item' );
   }, this );
@@ -17,21 +24,21 @@ function FilterViewModel() {
       return ( this.todoCount() > 0 ||
                this.completedCount() > 0 );
     }, this);
-
-  this._eventHub = ServiceRegistry.getService( 'br.event-hub' );
-  this._channel = this._eventHub.channel( 'todo-list' );
-
-  this._channel.on( 'remaining-updated', this._remainingUpdated, this );
-  this._channel.on( 'completed-updated', this._completedUpdated, this );
 }
 
-/** @private */
-FilterViewModel.prototype._remainingUpdated = function( remaining ) {
-  this.todoCount( remaining );
-};
+/**
+ * Synchronise the UI state with the contents of the service.
+ */
+FilterViewModel.prototype._sync = function() {
+  var todos = this._todoService.getTodos();
+  this.todoCount( todos.length );
 
-/** @private */
-FilterViewModel.prototype._completedUpdated = function( completed ) {
+  var completed = 0;
+  todos.forEach( function( todo ) {
+    if( todo.completed ) {
+      ++completed;
+    }
+  }, this );
   this.completedCount( completed );
 };
 
@@ -39,8 +46,12 @@ FilterViewModel.prototype._completedUpdated = function( completed ) {
  * Called from the View to indicate completed items should be cleared.
  */
 FilterViewModel.prototype.clearCompleted = function() {
-  this._channel.trigger( 'clear-completed', null, this );
-  return true;
+  var todos = this._todoService.getTodos();
+  todos.forEach( function( todo ) {
+    if( todo.completed ) {
+      this._todoService.removeTodo( todo );
+    }
+  }, this );
 };
 
 module.exports = FilterViewModel;
