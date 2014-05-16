@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<title>Workbench</title>
-		
+
 		<@css.bundle theme="standard"@/>
 		<@js.bundle dev-minifier="none"@/>
 
 		<style>
-			#footer {
+			.filter-component {
 				margin-top: 50px;
 				width: 500px;
 				bottom: auto;
@@ -16,7 +16,7 @@
 				margin-left: -275px;
 			}
 		</style>
-		
+
 		<script type="text/javascript">
 			var EventHubViewer = require( 'br/workbench/tools/EventHubViewer' );
 			var Workbench = require( 'br/workbench/ui/Workbench' );
@@ -26,6 +26,11 @@
 
 			var ServiceRegistry = require( 'br/ServiceRegistry' );
 			var eventHub = ServiceRegistry.getService( 'br.event-hub' );
+
+			// Set up TodosService
+			var LocalStorageService = require( 'todomvc/LocalStorageService' );
+			var todoService = new LocalStorageService();
+			ServiceRegistry.registerService( 'todomvc.storage', todoService );
 
 			// ViewModel that is being created in the workbench
 			var FilterViewModel = require( 'brjstodo/todo/filter/FilterViewModel' );

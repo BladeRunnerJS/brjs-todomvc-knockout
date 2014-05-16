@@ -15,7 +15,6 @@ function ItemsViewModel() {
   this._todoService.on( 'todo-added', this._todoAdded, this );
   this._todoService.on( 'todo-removed', this._todoRemoved, this );
 
-  // TODO: Array map function?
   var todos = this._todoService.getTodos();
   var todoVMs = [];
   todos.forEach( function( todo ) {

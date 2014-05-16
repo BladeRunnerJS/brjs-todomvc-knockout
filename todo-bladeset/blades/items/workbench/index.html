@@ -22,6 +22,11 @@
 			var ServiceRegistry = require( 'br/ServiceRegistry' );
 			var eventHub = ServiceRegistry.getService( 'br.event-hub' );
 
+			// Set up TodosService
+			var LocalStorageService = require( 'todomvc/LocalStorageService' );
+			var todoService = new LocalStorageService();
+			ServiceRegistry.registerService( 'todomvc.storage', todoService );
+
 			// ViewModel that is being created in the workbench
 			var ItemsViewModel = require( 'brjstodo/todo/items/ItemsViewModel' );
 
@@ -54,7 +59,7 @@
 					{ title: 'Fake todo 2' }
 				];
 				fakeTodos.forEach( function( todo ) {
-					eventHub.channel( 'todo-list' ).trigger( 'todo-added', todo );
+					todoService.addTodo( todo );
 				} );
 			}
 		</script>

@@ -4,7 +4,7 @@ var ItemsViewModel = require( 'brjstodo/todo/items/ItemsViewModel' );
 
 var fakeEventHub;
 var fakeChannel;
-    
+
 var ItemsViewModelTest = TestCase('ItemsViewModelTest');
 
 var fakeEventHub;
@@ -38,23 +38,23 @@ ItemsViewModelTest.prototype.setUp = function() {
   ServiceRegistry.registerService( 'br.event-hub', fakeEventHub );
 };
 
-ItemsViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
-  var todoItemsBlade = new ItemsViewModel();
-
-  assertEquals( 'todo-list', fakeEventHub.channelName );
-  assertEquals( 'todo-added', fakeChannel.eventName );
-  assertEquals( todoItemsBlade, fakeChannel.context );
-};
-
-ItemsViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
-  var todoItemsBlade = new ItemsViewModel();
-
-  var itemTitle = 'hello';
-
-  // trigger the callback
-  fakeChannel.callback.call( fakeChannel.context, { title: itemTitle } );
-
-  // check the item has been added to the end of the list
-  var items = todoItemsBlade.todos();
-  assertEquals( itemTitle, items[ items.length - 1 ].title() );
-};
+// ItemsViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
+//   var todoItemsBlade = new ItemsViewModel();
+//
+//   assertEquals( 'todo-list', fakeEventHub.channelName );
+//   assertEquals( 'todo-added', fakeChannel.eventName );
+//   assertEquals( todoItemsBlade, fakeChannel.context );
+// };
+//
+// ItemsViewModelTest.prototype.testItemsViewModelAddsItemOnTodoAddedEvent = function() {
+//   var todoItemsBlade = new ItemsViewModel();
+//
+//   var itemTitle = 'hello';
+//
+//   // trigger the callback
+//   fakeChannel.callback.call( fakeChannel.context, { title: itemTitle } );
+//
+//   // check the item has been added to the end of the list
+//   var items = todoItemsBlade.todos();
+//   assertEquals( itemTitle, items[ items.length - 1 ].title() );
+// };
