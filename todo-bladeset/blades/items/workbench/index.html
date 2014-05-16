@@ -3,11 +3,6 @@
 	<head>
 		<title>Workbench</title>
 
-		<!-- TODO: remove this workaround to ensure the eventhub is loaded as the aliases.xml is not being read -->
-    <script>
-      "br.event-hub";
-    </script>
-		
 		<@css.bundle theme="standard"@/>
 		<@js.bundle@/>
 		<style>
@@ -15,7 +10,7 @@
 			margin-top: 50px;
 		}
 		</style>
-		
+
 		<script type="text/javascript">
 			var EventHubViewer = require( 'br/workbench/tools/EventHubViewer' );
 			var ServiceRegistry = require( 'br/ServiceRegistry' );
