@@ -15,18 +15,3 @@ InputViewModelTest.prototype.testTodoTextFieldIsInitialized = function() {
 
   assertEquals( '', todoInputBlade.todoText() );
 };
-
-// InputViewModelTest.prototype.testEnterKeyPressedTriggersEventOnEventHub = function() {
-//   // Initialize
-//   var testTodoTitle = 'write some code and test it';
-//   var todoInputBlade = new InputViewModel();
-//   todoInputBlade.todoText( testTodoTitle );
-//
-//   // Execute test
-//   todoInputBlade.keyPressed( null, { keyCode: 13 } );
-//
-//   // Verify
-//   assertEquals( 'todo-list', fakeEventHub.channelName );
-//   assertEquals( 'todo-added', fakeChannel.eventName );
-//   assertEquals( testTodoTitle, fakeChannel.data.title );
-// };
