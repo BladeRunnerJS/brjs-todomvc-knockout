@@ -3,7 +3,7 @@
   <section class="items-component" data-bind="visible: listVisible">
 
     <input name="toggle-all" data-bind="checked: allCompleted" type="checkbox">
-    <label for="toggle-all">Mark all as complete</label>
+    <label for="toggle-all">@{brjstodo.todo.items.markCompleteLabel}</label>
     <ul class="todo-list" data-bind="foreach: todos">
       <li data-bind="css: { completed: completed, editing: editing }">
         <div class="view">
