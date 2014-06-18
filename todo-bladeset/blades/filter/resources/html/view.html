@@ -1,10 +1,10 @@
 <div id="brjstodo.todo.filter.view-template">
 
   <footer class="filter-component" data-bind="visible: visible">
-    <span class="todo-count"><strong data-bind="text: todoCount"></strong> <span data-bind="text: itemsLabel"></span> left</span>
+    <span class="todo-count"><strong data-bind="text: todoCount"></strong> <span data-bind="text: itemsLabel"></span></span>
 
     <button class="clear-completed" data-bind="click: clearCompleted">
-      Clear completed (<span data-bind="text: completedCount"></span>)
+      @{brjstodo.todo.filter.clearCompletedLabel} (<span data-bind="text: completedCount"></span>)
     </button>
   </footer>
 
