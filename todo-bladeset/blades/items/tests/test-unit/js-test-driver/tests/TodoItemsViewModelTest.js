@@ -38,6 +38,10 @@ ItemsViewModelTest.prototype.setUp = function() {
   ServiceRegistry.registerService( 'br.event-hub', fakeEventHub );
 };
 
+ItemsViewModelTest.prototype.testToKeepJSTDHappy = function() {
+    // a dummy test to keep JSTD from failing while all other tests are commented out
+};
+
 // ItemsViewModelTest.prototype.testTodoItemsBladeListensToItemAddedEvents = function() {
 //   var todoItemsBlade = new ItemsViewModel();
 //

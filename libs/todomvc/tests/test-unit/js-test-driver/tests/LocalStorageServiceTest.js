@@ -1,6 +1,6 @@
 var LocalStorageServiceTest = TestCase( 'LocalStorageServiceTest' );
 
-var LocalStorageService = require( 'todomvc/LocalStroageService' );
+var LocalStorageService = require( 'todomvc/LocalStorageService' );
 
 LocalStorageServiceTest.prototype.testTodoAddedEventIsTriggeredWhenAddingItem = function() {
 	var service = new LocalStorageService();
