@@ -6,13 +6,14 @@
 
 		<title>Workbench</title>
 
-		<@css.bundle theme="black" alternateTheme="red" @/>
+		<@css.bundle theme="standard"@/>
+
+		<@i18n.bundle@/>
+
+		<@js.bundle @/>
 
 	</head>
 	<body>
-
-		<@i18n.bundle @/>
-		<@js.bundle @/>
 
 		<script type="text/javascript">
 			var ServiceRegistry = require( 'br/ServiceRegistry' );
@@ -39,24 +40,31 @@
 			var workbench = new Workbench(250, 310);
 			addEventHubLogger( workbench );
 
+			// Set up TodoService
+			var LocalStorageService = require( 'todomvc/LocalStorageService' );
+			var todoService = new LocalStorageService();
+			ServiceRegistry.registerService( 'todomvc.storage', todoService );
+
 			var angular = require( 'angular' );
 			var InputDirective = require( 'brjstodo/ng/input/InputDirective' );
-			angular.module('demo', [])
-        .directive('myAvatar', function() {
-					return new InputDirective;
+			angular.module('brjstodo', [])
+        .directive('todoInput', function() {
+					return new InputDirective();
 				} );
 
 		</script>
 
 		<style>
 			.ng-workbench {
-				margin-left: 300px;
+				margin-left: 0;
+				margin-top: 30px;
 			}
 		</style>
 
 
-		<div class="ng-workbench" ng-app="demo">
-			<my-avatar service="facebook" username="leggetter"></my-avatar>
+		<div class="ng-workbench" ng-app="brjstodo">
+			<todo-input></todo-input>
 		</div>
+
 	</body>
 </html>

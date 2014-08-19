@@ -3,7 +3,7 @@
 	<head>
 		<@base.tag@/>
 		<meta charset="UTF-8">
-		
+
 		<title>BladeRunnerJS MVC Todo</title>
 
 		<@css.bundle theme="standard"@/>
@@ -68,7 +68,9 @@
 			</footer>
 		</aside>
 
-		<section id="todoapp"></section>
+		<section id="todoapp" ng-app="brjstodo">
+			<todo-input></todo-input>
+		</section>
 
 		<footer class="info">
 			<p>Double-click to edit a todo</p>
@@ -80,28 +82,10 @@
 		<script>
 			( function() {
 
-				var ServiceRegistry = require( 'br/ServiceRegistry' );
-				var EventHub = require( 'br/EventHub' );
-				ServiceRegistry.registerService( 'br.event-hub', new EventHub() );
-
 				var App = require( 'brjstodo/App' );
 				var app = new App();
 
-				hacks();
-
 			} )();
-
-			function hacks() {
-				// Hack until CSS bundlers are fixed
-				var styleEls = document.getElementsByTagName( 'link' );
-				var el;
-				for( var i = 0, l = styleEls.length; i < l; ++i ) {
-					el = styleEls[ i ];
-					if( el && /(\/)?css\/common\/bundle\.css$/.test( el.href ) ) {
-						el.parentNode.removeChild( el );
-					}
-				}
-			}
 		</script>
 	</body>
 </html>

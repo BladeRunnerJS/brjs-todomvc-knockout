@@ -13,10 +13,17 @@ var App = function() {
   var todoAppEl = document.getElementById( 'todoapp' );
 
   // todo input Blade
-  var inputModel = new InputViewModel();
-  var inputComponent = new KnockoutComponent( 'brjstodo.todo.input.view-template', inputModel );
-  var inputEl = inputComponent.getElement();
-  todoAppEl.appendChild( inputEl );
+  // var inputModel = new InputViewModel();
+  // var inputComponent = new KnockoutComponent( 'brjstodo.todo.input.view-template', inputModel );
+  // var inputEl = inputComponent.getElement();
+  // todoAppEl.appendChild( inputEl );
+
+  var angular = require( 'angular' );
+  var InputDirective = require( 'brjstodo/ng/input/InputDirective' );
+  angular.module('brjstodo', [] )
+    .directive('todoInput', function() {
+      return new InputDirective();
+    } );
 
   // todo items Blade
   var itemsModel = new ItemsViewModel();
