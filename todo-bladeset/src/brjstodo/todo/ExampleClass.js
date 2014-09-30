@@ -1,3 +1,0 @@
-brjstodo.todo.ExampleClass = function()
-{
-};

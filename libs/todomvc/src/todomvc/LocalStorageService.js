@@ -50,7 +50,6 @@ LocalStorageService.prototype.getTodos = function() {
 
 LocalStorageService.prototype._sync = function() {
   localStorage.setItem( TODO_ITEMS_ID, JSON.stringify( this._items ) );
-  console.log( this._items );
 };
 
 module.exports = LocalStorageService;

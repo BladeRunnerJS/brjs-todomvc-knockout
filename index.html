@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<@base.tag@/>
+		<meta charset="UTF-8">
+
+		<title>BladeRunnerJS MVC Todo</title>
+
+		<@css.bundle theme="standard"@/>
+
+		<@i18n.bundle@/>
+
+	</head>
+	<body class="learn-bar">
+
+		<aside class="learn">
+			<header>
+				<h3>BladeRunnerJS</h3>
+				<span class="source-links">
+
+					<h5>KnockoutJS Example</h5>
+					<a href="https://github.com/BladeRunnerJS/brjs-todomvc-knockout">Source</a>
+
+					<h5>AngularJS Example</h5>
+					<a href="#">Demo</a>, <a href="https://github.com/BladeRunnerJS/brjs-todomvc-angular">Source</a>
+
+				</span>
+			</header>
+
+			<hr>
+
+			<blockquote class="quote speech-bubble">
+				<p>BladeRunnerJS (BRJS) is an open source developer toolkit and lightweight front-end framework for building modular large-scale HTML5 single page apps. BRJS apps are split into discrete modules called Blades, each of which implements a single high level feature that can be developed in isolation.</p>
+				<footer>
+					<a href="http://bladerunnerjs.org">BladeRunnerJS</a>
+				</footer>
+			</blockquote>
+
+			<hr>
+
+			<h4>Official Resources</h4>
+
+			<ul>
+				<li>
+					<a href="http://bladerunnerjs.org">Website</a>
+				</li>
+				<li>
+					<a href="http://bladerunnerjs.org/docs">Documetation</a>
+				</li>
+			</ul>
+
+			<h4>Articles and Guides</h4>
+
+			<ul>
+				<li>
+					<a href="http://bladerunnerjs.org/docs/use/getting_started">Getting Started</a>
+				</li>
+				<li>
+					<a href="bladerunnerjs.org/blog/using-angularjs-with-bladerunnerjs/">BRJS &amp; AngularJS</a>
+				</li>
+			</ul>
+
+			<h4>Community</h4>
+
+			<ul>
+				<li>
+					<a href="http://twitter.com/bladerunnerjs">BladeRunnerJS on Twitter</a>
+				</li>
+				<li>
+					<a href="http://stackoverflow.com/questions/tagged/bladerunnerjs">BladeRunnerJS on StackOverflow</a>
+				</li>
+			</ul>
+
+			<footer>
+				<hr>
+				<em>If you have other helpful links to share, or find any of the links above no longer work, please <a href="https://github.com/BladeRunnerJS/brjs-todomvc-knockout/issues">let us know</a>.</em>
+			</footer>
+		</aside>
+
+		<section id="todoapp"></section>
+
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Created by <a href="https://github.com/orgs/BladeRunnerJS/members">The BladeRunnerJS team</a></p>
+			<p>An example of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+
+		<@js.bundle@/>
+		<script>
+			( function() {
+
+				var ServiceRegistry = require( 'br/ServiceRegistry' );
+				var EventHub = require( 'br/EventHub' );
+				ServiceRegistry.registerService( 'br.event-hub', new EventHub() );
+
+				var App = require( 'brjstodo/App' );
+				var app = new App();
+
+				hacks();
+
+			} )();
+
+			function hacks() {
+				// Hack until CSS bundlers are fixed
+				var styleEls = document.getElementsByTagName( 'link' );
+				var el;
+				for( var i = 0, l = styleEls.length; i < l; ++i ) {
+					el = styleEls[ i ];
+					if( el && /(\/)?css\/common\/bundle\.css$/.test( el.href ) ) {
+						el.parentNode.removeChild( el );
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
