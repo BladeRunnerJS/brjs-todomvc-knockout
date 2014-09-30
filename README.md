@@ -1,4 +1,4 @@
-# BladeRunnerJS Todo List Application
+# BRJS KnockoutJS Todo MVC
 
 A full [Todo MVC](http://todomvc.com) app based on KnockoutJS structured for BladeRunnerJS
 
