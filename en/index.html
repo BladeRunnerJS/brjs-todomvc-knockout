@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<base href="../"/><!--[if IE]><script type="text/javascript">
+// Fix IE ignoring relative base tags.
+(function() {
+	var baseTag = document.getElementsByTagName('base')[0];
+	baseTag.href = baseTag.href;
+})();
+</script><![endif]-->
+		<meta charset="UTF-8">
+
+		<title>BladeRunnerJS MVC Todo</title>
+
+		<link rel="stylesheet" title="standard" href="v/1412085502554/css/standard/bundle.css"/>
+
+
+		<script type="text/javascript" src="v/1412085502554/i18n/en.js"></script>
+
+
+	</head>
+	<body class="learn-bar">
+
+		<aside class="learn">
+			<header>
+				<h3>BladeRunnerJS</h3>
+				<span class="source-links">
+
+					<h5>KnockoutJS Example</h5>
+					<a href="https://github.com/BladeRunnerJS/brjs-todomvc-knockout">Source</a>
+
+				</span>
+			</header>
+
+			<hr>
+
+			<blockquote class="quote speech-bubble">
+				<p>BladeRunnerJS (BRJS) is an open source development toolkit and framework for modular construction of large single-page HTML5 apps. It consists of a set of conventions, supporting tools and micro-libraries that make it easier for teams to develop, test, deploy and maintain complex JavaScript apps.</p>
+				<footer>
+					<a href="http://bladerunnerjs.org">BladeRunnerJS</a>
+				</footer>
+			</blockquote>
+
+			<hr>
+
+			<h4>Other Examples</h4>
+
+			<ul>
+				<li>
+					<h5>AngularJS Example</h5>
+					<a href="#">Demo</a>, <a href="https://github.com/BladeRunnerJS/brjs-todomvc-angular">Source</a>
+				</li>
+			</ul>
+
+			<h4>Official Resources</h4>
+
+			<ul>
+				<li>
+					<a href="http://bladerunnerjs.org">Website</a>
+				</li>
+				<li>
+					<a href="http://bladerunnerjs.org/docs">Documentation</a>
+				</li>
+				<li>
+					<a href="http://bladerunnerjs.org/blog/">Blog</a>
+				</li>
+				<li>
+					<a href="http://bladerunnerjs.org/docs/reference/faq/">FAQ</a>
+				</li>
+			</ul>
+
+			<h4>Articles and Guides</h4>
+
+			<ul>
+				<li>
+					<a href="http://bladerunnerjs.org/docs/use/getting_started/">Getting Started</a>
+				</li>
+				<li>
+					<a href="bladerunnerjs.org/blog/using-angularjs-with-bladerunnerjs/">BRJS &amp; AngularJS</a>
+				</li>
+			</ul>
+
+			<h4>Community</h4>
+
+			<ul>
+				<li>
+					<a href="http://twitter.com/bladerunnerjs">BladeRunnerJS on Twitter</a>
+				</li>
+				<li>
+					<a href="http://stackoverflow.com/questions/tagged/bladerunnerjs">BladeRunnerJS on StackOverflow</a>
+				</li>
+			</ul>
+
+			<footer>
+				<hr>
+				<em>If you have other helpful links to share, or find any of the links above no longer work, please <a href="https://github.com/BladeRunnerJS/brjs-todomvc-knockout/issues">let us know</a>.</em>
+			</footer>
+		</aside>
+
+		<section id="todoapp"></section>
+
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Created by <a href="https://github.com/orgs/BladeRunnerJS/members">The BladeRunnerJS team</a></p>
+			<p>An example of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+
+		<script type='text/javascript' src='v/1412085502554/js/prod/combined/bundle.js'></script>
+
+		<script>
+			( function() {
+
+				var ServiceRegistry = require( 'br/ServiceRegistry' );
+				var EventHub = require( 'br/EventHub' );
+				ServiceRegistry.registerService( 'br.event-hub', new EventHub() );
+
+				var App = require( 'brjstodo/App' );
+				var app = new App();
+
+				hacks();
+
+			} )();
+
+			function hacks() {
+				// Hack until CSS bundlers are fixed
+				var styleEls = document.getElementsByTagName( 'link' );
+				var el;
+				for( var i = 0, l = styleEls.length; i < l; ++i ) {
+					el = styleEls[ i ];
+					if( el && /(\/)?css\/common\/bundle\.css$/.test( el.href ) ) {
+						el.parentNode.removeChild( el );
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
