@@ -1,10 +1,8 @@
-<div id="brjstodo.input.view-template">
-  <header class="input-component">
-    <h1>todos</h1>
-    <input type="text" class="todo-input"
-           data-bind="value:todoText,
-                      valueUpdate:'afterkeydown',
-                      event: { keypress: keyPressed }"
-           placeholder="@{brjstodo.input.placeholder}" />
-  </header>
-</div>
+<header id="brjstodo.input.view-template" class="input-component">
+  <h1>todos</h1>
+  <input type="text" class="todo-input"
+         data-bind="value:todoText,
+                    valueUpdate:'afterkeydown',
+                    event: { keypress: keyPressed }"
+         placeholder="@{brjstodo.input.placeholder}" />
+</header>
